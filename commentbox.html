@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>comments</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<style>
+		.container{
+			position: relative;
+			min-width: 500px;
+			min-height: 300px;
+			overflow-y : scroll; 
+			background-color: #fff000;
+			list-style-type: none;
+		}
+		.container .left{
+			float: left;
+			left: 0px;
+			background-color: grey; 
+		}
+		.container .right {
+			float: right;
+			right: 0px;
+			background-color: grey;
+		}
+		.container .bt{
+			position: absolute;
+			bottom: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function() {
+			$('#btn').on('click', function(){
+				// $.post("/create/data",{comment : $('#comment').val()}, function(data, status){
+    //     			alert("Data: " + data + "\nStatus: " + status);
+    // 			});
+    			$.post("/create/message", function(data, status){
+        			console.log("Data: " + data[0] + "\nStatus: " + status);
+        			var i = 1;
+        			var array = [];
+        			for(var x in data){
+        				//console.log('-->',data[x].id);
+        				console.log(data[x]);
+        				array.push(data[x].id);
+        				if(data[x].comment_type === 'user'){
+        					$('.left').after("<li id ='"+i+"' class = 'left'>"+data[x].comment+"</li><br>")
+        				}
+        				i++;
+        			}
+    			});
+			})
+
+			//show login on duble click on comment for delete
+			$('li').on('click', function(){
+				$('#loginContainer').show('slow');
+			});
+		})		
+	</script>
+</head>
+<body>	
+		<!--login box-->
+	<div id = "loginContainer" style="display: none;">
+		<input type="text" name="username" id = "username">
+		<input type = 'text' id = "password">
+		<button type = "text" id= 'login'>login</button>
+	</div>
+  <div class = "container">
+  <ul>
+  	<li class = 'left'>hello</li><br>
+  	<li class = 'right'>hello</li><br>
+  </ul>
+  <div class = 'bt'>
+  	  <input type = "text" id = "comment">
+  	  <button type = "button" id = "btn">Send!......</button>
+  </div>
+  </div>
+</body>
+</html>

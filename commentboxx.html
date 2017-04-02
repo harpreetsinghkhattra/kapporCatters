@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comment Box</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script> 
+    <style>
+      .user_name{
+      font-size:14px;
+      font-weight: bold;
+      color:black;
+      }
+      .comments-list .media{
+      border-bottom: 1px dotted #ccc
+      color:black;
+      }
+      .media-body, .media-left, .media-right {
+      color: grey;
+      display: table-cell;
+      vertical-align: top;
+      }
+    </style>
+    <script type="text/javascript">
+    $(function() {
+      $('#send').on('click', function(){
+        $.post("/create/data",{comment : $('#reply')[0].value}, function(data, status){
+              alert("Data: " + data + "\nStatus: " + status);
+          });
+          console.log($('#reply')[0].value);
+          $.post("/create/message", '', function(data, status){
+              console.log("Data: " + data[0] + "\nStatus: " + status);
+              var i = 1;
+              var array = [];
+              for(var x in data){
+                //console.log('-->',data[x].id);
+                console.log(data[x]);
+                array.push(data[x].id);
+                if(data[x].comment_type === 'user'){
+                  $('#commenting').html('');
+                  $('#commenting').after(`
+
+               <div class="media">
+                           <p class="pull-right"><small>5 days ago</small></p>
+                           <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/4/">
+                           </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name" id = 'ryply_sender'>${data[x].createdTime}</h4>
+                             ${data[x].comment}
+                            </div>
+                          </div>
+                    `);
+                }
+                i++;
+              }
+          });
+      })
+
+      //show login on duble click on comment for delete
+      $('li').on('click', function(){
+        $('#loginContainer').show('slow');
+      });
+    })    
+  </script>
+</head>
+<body>
+  <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="page-header">
+                    <h1 style="color:black"><small class="pull-right"></small>Feedback </h1>
+                  </div> 
+                   <div class="comments-list" id='commenting'>
+                      
+          </div> 
+
+
+                      <!-- ======================================================================== -->
+
+            <!-- <div class="media">
+                          
+                            <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/3/">
+                            </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name" id = "comment_sender">Mayank Kumar</h4>
+                              They are best and non-veg i just love it. ! Pure Punjabi.!
+                              
+                              <p><small><a href="">Like</a> </small></p>
+                            </div>
+                          </div>
+                       <div class="media">
+                           <p class="pull-right"><small>5 days ago</small></p>
+                            <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/4/">
+                            </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name" id = 'ryply_sender'>Ashish Singh</h4>
+                             Keep it guys :)
+                              
+                              <p><small><a href="">Like</a> </small></p>
+                            </div>
+                          </div> -->
+
+
+
+                   <!-- ========================================================================================                    -->
+                    
+                    
+                </div>
+            </div>
+            <div class = 'row'>
+              <div class = 'col-md-6'>
+                <div>
+                  <label for = 'reply'></label>
+                  <input type="text" name="reply" id = "reply">
+                </div>
+                <div>
+                  <label for = 'send'></label>
+                  <button type = "button" id = "send">Send</button>
+                </div>
+
+              </div>
+          </div>
+</body>
+</html>
