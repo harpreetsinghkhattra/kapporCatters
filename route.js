@@ -3,6 +3,14 @@ var route = express.Router();
 var crud = require('./operations.js');
 
 route.post('/login', function(req, res){
+	console.log(req.body.username, ' ', req.body.password);
+	crud.login(req.body.username, req.body.password, req.body.del_id, function(data){
+		if(data === 'ok'){
+			res.json('ok');
+		}else{
+			res.json('not_ok');
+		}
+	})
 
 });
 route.post('/data', function(req,res)
@@ -25,7 +33,8 @@ route.post('/data', function(req,res)
 
 route.post('/message', function(req, res){
 	console.log('here i am going to fetch the data...');
-	crud.getComment(function(data){
+	var limit = parseInt(req.body.limit);
+	crud.getComment(limit, function(data){
 		console.log('i got data here \n', data);
 		res.send(data);
 	});

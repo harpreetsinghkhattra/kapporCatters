@@ -18,8 +18,22 @@ function database(callback){
     });
 }
 
-module.exports.login = function(username, password, callback){
-	
+module.exports.login = function(username, password,id, callback){
+	database(function(err, db){
+		if(err) throw err;
+		var collection = db.collection('login');
+		var comment = db.collection('comment');
+		collection.find({username : username, password : password}).toArray(function(err, data){
+			if(err) throw err;
+			if(data && data.length !== 0){
+				comment.remove({id : id});
+				callback('ok');
+			}else{
+				callback('not_ok');
+			}
+		});
+
+	})
 }
 module.exports.saveComment = function(comment, comment_type, callback){
 	 database(function(err, db){
@@ -33,7 +47,7 @@ module.exports.saveComment = function(comment, comment_type, callback){
 	 				collection.insertOne({
 	 					'id' : data[data.length-1].id+1,
 	 					'comment' : comment,
-	 					'createdTime' : Date().toString(),
+	 					'createdTime' : Date().toString().replace('GMT+0530 (IST)',''),
 	 					'status' : 1,
 	 					'comment_type' : comment_type
 	 				}).then(function(data){
@@ -46,12 +60,29 @@ module.exports.saveComment = function(comment, comment_type, callback){
 	 				}, function(err){
 	 					console.log('the cause of rejection is >', err);
 	 				});
-	 			}
+	 			}else{
+	 			collection.insertOne({
+	 					'id' : 1,
+	 					'comment' : comment,
+	 					'createdTime' : Date().toString().replace('GMT+0530 (IST)',''),
+	 					'status' : 1,
+	 					'comment_type' : comment_type
+	 				}).then(function(data){
+	 					console.log(data.result.ok === 1)
+	 					if(data.result.ok === 1){
+	 						console.log('here data comment is entered with comment this :>\n');
+	 						callback('ok');
+	 						db.close();
+	 					}
+	 				}, function(err){
+	 					console.log('the cause of rejection is >', err);
+	 				});
+	 		}
 	 		}
 	 	})
 	 });
 }
-module.exports.getComment = function(callback){
+module.exports.getComment = function(li, callback){
 	database(function(err, db){
 	 	if(err) throw err;
 	 	var collection = db.collection('comment');
@@ -60,9 +91,9 @@ module.exports.getComment = function(callback){
 	 		if(data){
 	 			if(data.length !== 0){
 	 				var array = [];
-	 				var limit = array.length+4;
 	 				for(x in data){
 	 					array.push({
+
 	 						id : data[x].id,
 	 						comment : data[x].comment,
 	 						createdTime : data[x].createdTime,
@@ -70,7 +101,7 @@ module.exports.getComment = function(callback){
 	 						comment_type : data[x].comment_type
 	 					})
 	 						// console.log(array);
-	 					if(array.length === limit){
+	 					if(array.length === li){
 	 						 console.log(array);
 	 						callback(array);
 	 						break;
