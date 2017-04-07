@@ -10,7 +10,7 @@ var expressSession = require('express-session');
 var fs = require('fs');
 var app = express(); 
 var port = process.env.PORT || 3000;
-
+ 
 // data base 
 var client = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -23,15 +23,12 @@ function database(callback){
 }
 
 function profileinfo(profile){
-    console.log('here is begining of our profileinfo method', profile);
     if(profile !== undefined && profile.length !== 0){
-      console.log('profile is valid');
       database(function(err, db){
         var collection = db.collection('comment');
             collection.find({}).sort({$natural:-1}).limit(1).toArray(function(err, data){
               if(err) throw err;
               if(data && data.length !== 0){
-                console.log('data length is not empkaty ok all right!........', parseInt(data[0].id)+1)
                  collection.insert({
               "id" : data[0].id+1,
               "profile_id" : profile.id,
@@ -43,7 +40,7 @@ function profileinfo(profile){
               if(response.result.ok === 1){
                 collection.find({}).toArray(function(err, d){
                   if(err) throw err;
-                  if(d){ console.log(d)
+                  if(d){ 
                     console.log('ok too')};
                 })
               }else{
@@ -51,7 +48,6 @@ function profileinfo(profile){
               }
             }); 
       }else{
-              console.log('data length is not empkaty ok all right!........')
 
            collection.insert({
             "id" : 1,
@@ -64,11 +60,11 @@ function profileinfo(profile){
             if(response.result.ok === 1){
               collection.find({}).toArray(function(err, d){
                 if(err) throw err;
-                if(d){ console.log(d)
+                if(d){ 
                   console.log('ok too')};
               })
             }else{
-                      console.log('here response is different see', response);
+                      
             }
           });
         }
@@ -117,7 +113,6 @@ passport.use(new FacebookStrategy({
     process.nextTick(function () {
       //Check whether the User exists or not using profile.id
       //Further DB code.
-     console.log('hello//////////////////////////////////',profile.photos[0].value);
      profileinfo(profile);
       return done(null, profile);
     });
@@ -139,28 +134,30 @@ app.get('/', function(req, res){
         res.end();
 });
 
+app.get('/moreDetail', function(req, res){
+        res.render('sahil', { user: req.user });
+        res.end();
+});
+
 //------------------------------ SET AND GET MESSAGES ---------------------------------
 
 
-app.post('/check', function(req, res){
-        if(parseInt(req.session.id) === 1){
-          console.log(1,'lllllllllllllllllllllllll')
-          res.send(1);
-          res.end();
-        }else if(parseInt(req.session.id) === 0){
-                    console.log(0, 'lllllllllllllllllllllllll')
-          res.send(0);
-          res.end();
-        }else if(req.session.id === undefined){
-                    console.log('u' ,'llllllllllllllllllllllllllll')
-          res.send('not defined');
-          res.end();
-        }else{
-        console.log(req.session.id);
-          res.send('waht');
-          res.end();
-        }
-});
+// app.post('/check', function(req, res){
+//         if(parseInt(req.session.id) === 1){
+//           res.send(1);
+//           res.end();
+//         }else if(parseInt(req.session.id) === 0){
+//           res.send(0);
+//           res.end();
+//         }else if(req.session.id === undefined){
+//           res.send('not defined');
+//           res.end();
+//         }else{
+//         console.log(req.session.id);
+//           res.send('waht');
+//           res.end();
+//         }
+// });
 
 app.get('/login', function(req , res){
         res.render('loginSuccess', { user: req.user });
@@ -173,7 +170,6 @@ app.get('/errorOccured:id', function(req, res){
 })
 
 app.post('/setMessage', function(req, res){
-  console.log('here i am initailaze ok al it is', req.body.message);
   database(function(err, db){
       if(err) throw err;
           var collection = db.collection('comment');

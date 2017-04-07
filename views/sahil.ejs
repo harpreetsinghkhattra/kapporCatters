@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900" rel="stylesheet">
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/views/cat.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Título Aba</title>
+<!-- Bootstrap -->
+<!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+ --><!-- Font Awesome -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" href="navbar.css">
+ --><!-- <script src="bootstrap/js/jquery-1.11.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+ -->
+<style>
+
+/*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+*/
+
+.detailBox {
+width:320px;
+border:1px solid #bbb;
+margin:50px;
+}
+.titleBox {
+background-color:#fdfdfd;
+padding:10px;
+}
+.titleBox label{
+color:#444;
+margin:0;
+display:inline-block;
+}
+
+.commentBox {
+padding:10px;
+border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+width:18%;
+}
+.actionBox .form-group * {
+width:100%;
+}
+.taskDescription {
+margin-top:10px 0;
+}
+.commentList {
+padding:0;
+list-style:none;
+max-height:200px;
+overflow:auto;
+}
+.commentList li {
+margin:0;
+margin-top:10px;
+}
+.commentList li > div {
+display:table-cell;
+}
+.commenterImage {
+width:30px;
+margin-right:5px;
+height:100%;
+float:left;
+}
+.commenterImage img {
+width:100%;
+border-radius:50%;
+}
+.commentText p {
+margin:0;
+}
+.sub-text {
+color:#aaa;
+font-family:verdana;
+font-size:11px;
+}
+.actionBox {
+border-top:1px dotted #bbb;
+padding:10px;
+}
+
+</style>
+
+
+<script type="text/javascript">
+$(function() {
+var j = 3;
+
+
+//close the comment box
+$('.close').on('click', function(){
+	$('.detailBox').hide('slow');
+});
+
+//send comment 
+$('#btn_add').on('click',function(){
+	$.post('/setMessage',{message : $('#user_comment').val()}, function(data, status){
+		if(data === 'ok'){
+			$('#btn_add').hide();
+			$.post('/getMessage',{count : 0, limit : 1}, function(data, status){
+		if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+})
+		}
+	})
+});
+
+//show more comments
+var i = 2;
+$('#btn_show').on('click', function(){
+	$.post('getMessage',{count : i, limit : 2}, function(data, status){
+		alert(data.length)
+		if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+	})
+		i += 2;
+})
+//get message
+$.post('/getMessage',{count : 0, limit : 2}, function(data, status){
+	if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+})
+
+//show facebook login
+$('#user_comment').on('keyup', function(){
+	if($(this).val() !== ''){
+		$('#facebookLogin').show('slow');
+	}
+})
+
+//open new window
+$('#facebookLogin').on('click', function(){
+		$('#btn_add').show();
+	window.open('http://localhost:3000/auth/facebook','myWindow', "width=500, height=300");
+});
+})    
+</script>
+
+
+
+</head>
+<body>
+<script>
+
+/* affix the navbar after scroll below header */
+$('#nav').affix({
+offset: {
+top: $('header').height()-$('#nav').height()
+}
+});	
+
+/* highlight the top nav as scrolling occurs */
+$('body').scrollspy({ target: '#nav' })
+
+/* smooth scrolling for scroll to top */
+$('.scroll-top').click(function(){
+$('body,html').animate({scrollTop:0},1000);
+})
+
+/* smooth scrolling for nav sections */
+$('#nav .navbar-nav li>a').click(function(){
+var link = $(this).attr('href');
+var posi = $(link).offset().top+20;
+$('body,html').animate({scrollTop:posi},700);
+})
+
+/* google maps */
+
+// enable the visual refresh
+google.maps.visualRefresh = true;
+
+var map;
+function initialize() {
+var mapOptions = {
+zoom: 15,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+map = new google.maps.Map(document.getElementById('map-canvas'),
+mapOptions);
+// try HTML5 geolocation
+if(navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(function(position) {
+var pos = new google.maps.LatLng(position.coords.latitude,
+position.coords.longitude);
+
+var infowindow = new google.maps.InfoWindow({
+map: map,
+position: pos,
+content: 'Location found using HTML5.'
+});
+
+map.setCenter(pos);
+}, function() {
+handleNoGeolocation(true);
+});
+} else {
+// browser doesn't support geolocation
+handleNoGeolocation(false);
+}
+}
+
+function handleNoGeolocation(errorFlag) {
+if (errorFlag) {
+var content = 'Error: The Geolocation service failed.';
+} else {
+var content = 'Error: Your browser doesn\'t support geolocation.';
+}
+
+var options = {
+map: map,
+position: new google.maps.LatLng(60, 105),
+content: content
+};
+
+var infowindow = new google.maps.InfoWindow(options);
+map.setCenter(options.position);
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+<!-- Wrap all page content here -->
+<!-- Fixed navbar -->
+<div class="navbar navbar-custom navbar-inverse navbar-static-top" id="nav">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse">
+<ul class="nav navbar-nav nav-justified">
+<li>
+<a href="">Home</a>
+</li>
+<li>
+<a href="/">About us</a>
+</li>
+
+<li class="active">
+<a href="#service">
+<strong>Our Services</strong>
+</a>
+</li>
+<li>
+<a href="#con">Contact</a>
+</li>
+
+
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+<!--/.container -->
+</div>
+<!--/.navbar -->
+<!-- Begin page content --><div class="logo">
+<center>	<img src="/views/kc.jpg" alt="Lorem ipsum" / style="margin-top:20px"></center>
+</div>
+<div class="divider" id="section1"></div>
+<div class="container">
+<div class="col-sm-10 col-sm-offset-1">
+<div class="page-header text-center">
+<h1>Looking For a Bargain? You'll Love This</h1>
+</div>
+<p class="lead text-center">
+The perfect solution for any occasion
+</p>
+<p class="text-center">When planning the sweet table for your occasion, there are several things you'll want to remember and a few wedding dessert recipes you'll want to try: Personal, bite-size portions are convenient and adorable. Desserts should taste just as amazing as they look. Offer a variety of yummy options that also pose as conversational pieces. Anything that good is worth that chatter. Follow these general rules if you're going for a DIY dessert table, and check out a few favorite dessert ideas below for inspiration!
+</p>
+</div>
+</div>
+<div class="divider" id="section2"></div>
+<section class="bg-1">
+<div class="col-sm-6 col-sm-offset-3 text-center">
+<h2 style="padding:20px;background-color:rgba(5,5,5,.8)">There is no sincerer love than the love of food</h2>
+</div>
+</section>
+<div class="divider"></div>
+<div class="container" id="section3">
+<div class="col-sm-8 col-sm-offset-2 text-center">
+<h1>Food is symbolic of love </h1>
+<hr>
+<p>
+Let’s be realistic! For many of your guests, one of the most memorable parts of the wedding is the food. This year’s wedding food trend is all about getting creative and contemporizing the traditional dishes. Couples are shying away from only serving traditional sit-down dishes, and starting to offer more creative canapes, mini comfort food,
+</p>
+</div>
+<!--/col-->
+</div>
+<!--/container-->
+<div class="divider"></div>
+<section class="bg-3" id="section4">
+<div class="col-sm-6 col-sm-offset-3 text-center">
+<h2 style="padding:20px;background-color:rgba(5,5,5,.8)">Facts are to the mind what food is to the body</h2>
+</div>
+</section>
+
+
+
+
+														<div id="service">
+<div class="container">
+<center>
+	<h1>Our Services</h1>
+</center>
+<hr>
+	<section class="col-xs-12 col-sm-6 col-md-12">
+		<article class="search-result row">
+			<div class="col-xs-12 col-sm-12 col-md-3">
+				<a  title="Lorem ipsum" class="thumbnail">
+					<img src="/views/breakfast.jpg" alt="Lorem ipsum" />
+				</a>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2"></div>
+			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+				<h3 style="color:black">BREAKFAST</h3>
+				<p style="color:grey">Age does take it out of you, and I haven't the energy I had before. Sometimes I have breakfast and sit in this chair, and I wake up and it is lunchtime. In the past, the idea of sleeping through a morning would have horrified me, but you have to accept the limitations that old age imposes on you.
+</p>
+				<hr>
+				</div>
+				<span class="clearfix borda"></span>
+			</article>
+			<article class="search-result row">
+				<div class="col-xs-12 col-sm-12 col-md-3">
+					<a  title="Lorem ipsum" class="thumbnail">
+						<img src="/views/lunch.jpg" alt="Lorem ipsum" />
+					</a>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2"></div>
+				<div class="col-xs-12 col-sm-12 col-md-7">
+					<h3 style="color:black">LUNCH</h3>
+					<p style="color:grey">When every one of your arguments is characterized an attempt to bring back slavery or resegregate lunch counters, it's a little hard to have any sort of productive debate.
+</p>
+					<hr>
+					</div>
+					<span class="clearfix borda"></span>
+				</article>
+				<article class="search-result row">
+					<div class="col-xs-12 col-sm-12 col-md-3">
+						<a  title="Lorem ipsum" class="thumbnail">
+							<img src="/views/dinner.jpg" alt="Lorem ipsum" />
+						</a>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-7">
+						<h3 style="color:black">DINNER</h3>
+						<p style="color:grey">Every Thanksgiving, we all write down three things we're thankful for and put them in a hat. Then we pass the hat around the dinner table and everyone has to guess who wrote what!
+</p>
+						<hr>
+						</div>
+						<span class="clearfix border"></span>
+					</article>
+				</section>
+			</div>
+		</div>
+
+		<section id="t-cards">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 col-md-3">
+						<div class="panel panel-default panel-card">
+							<div class="panel-heading">
+								<img src="/views/page1-img1.jpg" />
+							</div>
+							<div class="panel-figure">
+								<img class="img-responsive img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/73.jpg" />
+							</div>
+							<div class="panel-body text-center">
+								<h4 class="panel-header">
+										<p style="color: #337ab7">CORPORATE</p>
+								</h4>
+								<small>A short description goes here.</small>
+							</div>
+							<div class="panel-thumbnails">
+								<div class="row">
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/corporate.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/corporate2.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/corporate3.jpg" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<div class="panel panel-default panel-card">
+							<div class="panel-heading">
+								<img src="/views/page1-img2.jpg"/>
+							</div>
+							<div class="panel-figure">
+								<img class="img-responsive img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/josue/73.jpg" />
+							</div>
+							<div class="panel-body text-center">
+								<h4 class="panel-header">
+										<p style="color: #337ab7">BANQUET HALL</p>
+								</h4>
+								<small>A short description goes here.</small>
+							</div>
+							<div class="panel-thumbnails">
+								<div class="row">
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/banquet hall1.JPG" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/banquet hall3.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/banquethall2.jpg" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<div class="panel panel-default panel-card">
+							<div class="panel-heading">
+								<img src="/views/page1-img3.jpg" />
+							</div>
+							<div class="panel-figure">
+								<img class="img-responsive img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mutlu82/73.jpg" />
+							</div>
+							<div class="panel-body text-center">
+								<h4 class="panel-header">
+									<p style="color: #337ab7">WEDDING</p>
+								</h4>
+								<small>A short description goes here.</small>
+							</div>
+							<div class="panel-thumbnails">
+								<div class="row">
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/wedding2.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/wedding1.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/wedding3.png" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<div class="panel panel-default panel-card">
+							<div class="panel-heading">
+								<img src="/views/thumb_COLOURBOX10470374.jpg"/>
+							</div>
+							<div class="panel-figure">
+								<img class="img-responsive img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/nisaanjani/73.jpg" />
+							</div>
+							<div class="panel-body text-center">
+								<h4 class="panel-header">
+										<p style="color: #337ab7">FOOD</p>
+								</h4>
+								<small>A short description goes here.</small>
+							</div>
+							<div class="panel-thumbnails">
+								<div class="row">
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/food2.jpg" />
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/food1.jpg">
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="thumbnail">
+											<img src="/views/food3.jpg">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====================================== COMMENT BOX START HERE ============================== -->
+		<div class="detailBox">
+<div class="titleBox">
+<label>Feedback Box</label>
+<button type="button" class="close" aria-hidden="true">&times;</button>
+</div>
+<div class="commentBox">
+
+<p class="taskDescription">We Are Waiting Your Thoughts And Notions About Our Service</p>
+</div>
+<div class="actionBox">
+<!-- ===================================start=============================== -->
+<!-- ======================================================================= -->
+<form>
+<div class="form-group">
+<input class="form-control" type="text" placeholder="Your comments" name ='user_comment' id = 'user_comment' />
+</div>
+<div class="form-group">
+<button type="button"  class="btn btn-default" style='display: none;' name = 'btn_add' id ='btn_add'>Add</button>
+</div>
+<!-- ============================================================================ -->
+<div id = 'facebookLogin' style="display: none;">
+<!-- 	<h6 style="font-size:40px;">Welcome! Please log in.</h6>
+ -->	<!-- href="/auth/facebook" -->
+	<a><img src="/public/facebook login.png" width="151" height="50"></a>
+</div>
+<div>
+<button type="button" style = 'width : 100%; position: relative;' class="btn btn-default" name = 'btn_show' id ='btn_show'>Show More Comments</button>
+</div>
+<!-- ============================================================================ -->
+</form>
+</div>
+</div>
+		<!-- ============================================================================================ -->
+		<!--footer-->
+		<footer class="footer1">
+			<div class="container">
+				<div class="row">
+					<!-- row -->
+					<div class="col-lg-4 col-md-4">
+						<!-- widgets column left -->
+						<ul class="list-unstyled clear-margins">
+							<!-- widgets -->
+							<li class="widget-container widget_nav_menu">
+								<!-- widgets list -->
+								<h1 class="title-widget">Our Links</h1>
+								<ul>
+									<li>
+										<a  href="http://luvmahajan007.000webhostapp.com/index.html">
+											<i class="fa fa-angle-double-right"></i>  About Us
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="#con">
+											<i class="fa fa-angle-double-right"></i>  Contact Us
+										
+										
+										</a>
+									</li>
+									
+																																		
+										
+										
+									<li>
+										<a  href="#service">
+											<i class="fa fa-angle-double-right"></i>  Our Services
+										
+										
+										</a>
+									</li>
+									
+									
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- widgets column left end -->
+					<div class="col-lg-4 col-md-4">
+						<!-- widgets column left -->
+						<ul class="list-unstyled clear-margins">
+							<!-- widgets -->
+							<li class="widget-container widget_nav_menu">
+								<!-- widgets list -->
+								<h1 class="title-widget">SHARE OUR SPACE</h1>
+								<ul>
+									<li>
+										<a  href="http://www.woodsidedevelopments.com/">
+											<i class="fa fa-angle-double-right"></i>   Wood Side ,  Kasauli     
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="https://amritsar.hyatthotels.hyatt.com/en/hotel/offers.html?&src=pfxswain_sem_google_atqhy_rooms_in_eng_brand_exact_atqhy_brand-name_hyatt%20amritsar&mckv=sy68QBzyA_dc|pcrid|186429863508|mtid|529dkt13792&gclid=Cj0KEQjw-73GBRCC7KODl9zToJMBEiQAj1Jgf4spJcsWA9_LYGrbDeNVLvI9QRkmLknba9U1OHDVxLIaAoA58P8HAQ">
+											<i class="fa fa-angle-double-right"></i>  Hyatt  , Amritsar             
+									
+										
+										</a>
+									</li>
+									<li>
+										<a  href="http://www.marriott.com/hotels/travel/jaimc-jaipur-marriott-hotel/">
+											<i class="fa fa-angle-double-right"></i>  Marriot Hotel  ,  Jaipur             
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="https://www.weddingplz.com/delhi-ncr/banquets/carnival-motel-and-resorts-alipur">
+											<i class="fa fa-angle-double-right"></i>  Carnival Resort  ,   Delhi
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="http://www.akmresort.com/">
+											<i class="fa fa-angle-double-right"></i>  AKM Resort   ,      Chandigarh 
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="http://www.jaypeehotels.com/siddharth-new-delhi">
+											<i class="fa fa-angle-double-right"></i>  Jaypee Hotel ,  Delhi
+										
+										
+										</a>
+									</li>
+									<li>
+										<a  href="http://www.samode.com/">
+											<i class="fa fa-angle-double-right"></i>  Samode Palace , Jaipur
+										
+										
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- widgets column left end --><umn left end -->
+					<div id="con">
+						<div class="col-lg-4 col-md-4">
+							<!-- widgets column center -->
+							<ul class="list-unstyled clear-margins">
+								<!-- widgets -->
+								<li class="widget-container widget_recent_news">
+									<!-- widgets list -->
+									<h1 class="title-widget">Contact Detail </h1>
+									<div class="footerp">
+										<h2 class="title-median">Kapoor Catrers.Ltd</h2>
+										<p>
+											<b>Business Partners :  
+									
+									
+											</p>
+											<p style="color:grey"> Sherry Kapoor ,  Raj Kapoor </p>
+											<p>
+												<b>Email id:</b>
+												<a>talkiekap@gmail.com</a>
+											</p>
+											<p>
+												<b>Working Hours </b>
+												<b style="color:#ffc106;">(9AM to 10PM)</b>
+											</p>
+											<p>
+												<b>Postal Address : </b>
+												<p style="color:grey">S/O:Surinder Singh,1063,Gali Guru Arjan Dev ,Inside Gill Wali Gate,Amritsar-I,Amritsar,Amritsar G.P.0,PUNJAB,143001
+									</p>
+												<p>
+													<b>Phone Numbers :  
+									
+									
+													</p>
+													<p style="color:grey"> +91-9814337216  , +91-9814366662 ,<br> +91-9988414865 </p>
+												</div>
+												
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</footer>
+					<!--header-->
+					<div class="footer-bottom">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+<div class="copyright">
+
+© 2017 All rights reserved
+
+</div>
+
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+<div class="design">
+
+<a href="#">Franchisee </a> |  <a target="_blank" href="https://www.facebook.com/love.mahajan.9">Web Design & Development by Luv Sehgal</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+					<ul class="nav pull-right scroll-top">
+						<li>
+							<a href="#" title="Scroll to top">
+								<i class="glyphicon glyphicon-chevron-up"></i>
+							</a>
+						</li>
+					</ul>
+				</body>
+			</html>

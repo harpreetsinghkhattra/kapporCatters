@@ -1,285 +1,1441 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>Bootstrap Theme Simply Me</title>
+  <meta charset="utf-8">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900" rel="stylesheet">
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+ @import url('https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900');
+  
+.btn:hover,
+.btn:focus,
+.btn:active{
+    outline: 0 !important;
+}
+/* entire container, keeps perspective */
+.card-container {
+	  -webkit-perspective: 800px;
+   -moz-perspective: 800px;
+     -o-perspective: 800px;
+        perspective: 800px;
+        margin-bottom: 30px;
+}
+/* flip the pane when hovered */
+.card-container:not(.manual-flip):hover .card,
+.card-container.hover.manual-flip .card{
+	-webkit-transform: rotateY( 180deg );
+-moz-transform: rotateY( 180deg );
+ -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
 
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
+.card-container.static:hover .card,
+.card-container.static.hover .card {
+	-webkit-transform: none;
+-moz-transform: none;
+ -o-transform: none;
+    transform: none;
+}
+/* flip speed goes here */
+.card {
+	 -webkit-transition: -webkit-transform .5s;
+   -moz-transition: -moz-transform .5s;
+     -o-transition: -o-transform .5s;
+        transition: transform .5s;
+-webkit-transform-style: preserve-3d;
+   -moz-transform-style: preserve-3d;
+     -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+	position: relative;
+}
 
-/*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+/* hide back of pane during swap */
+.front, .back {
+	-webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+     -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #FFF;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+}
+
+/* back, initially hidden pane */
+.back {
+		-webkit-transform: rotateY( 180deg );
+   -moz-transform: rotateY( 180deg );
+     -o-transform: rotateY( 180deg );
+        transform: rotateY( 180deg );
+        z-index: 3;
+}
+
+.back .btn-simple{
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+}
+/*        Style       */
+
+
+.card{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 4px;
+    color: #444444;
+}
+.card-container, .front, .back {
+	width: 100%;
+	height: 420px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.16);
+-moz-box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.16);
+box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.16);
+}
+.card .cover{
+    height: 105px;
+    overflow: hidden;
+    border-radius: 4px 4px 0 0;
+}
+.card .cover img{
+    width: 100%;
+}
+.card .user{
+    border-radius: 50%;
+    display: block;
+    height: 120px;
+    margin: -55px auto 0;
+    overflow: hidden;
+    width: 120px;
+}
+.card .user img{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 4px solid #FFFFFF;
+    width: 100%;
+}
+
+.card .content{
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    padding: 10px 20px 20px;
+}
+.card .content .main {
+    min-height: 160px;
+}
+.card .back .content .main {
+    height: 215px;
+}
+.card .name {
+		font-family: 'Arima Madurai', cursive;
+    font-size: 22px;
+    line-height: 28px;
+    margin: 10px 0 0;
+    text-align: center;
+    text-transform: capitalize;
+}
+.card h5{
+    margin: 5px 0;
+    font-weight: 400;
+    line-height: 20px;
+}
+.card .profession{
+    color: #999999;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.card .footer {
+    border-top: 1px solid #EEEEEE;
+    color: #999999;
+    margin: 30px 0 0;
+    padding: 10px 0 0;
+    text-align: center;
+}
+.card .footer .social-links{
+    font-size: 18px;
+}
+.card .footer .social-links a{
+    margin: 0 7px;
+}
+.card .footer .btn-simple{
+    margin-top: -6px;
+}
+.card .header {
+    padding: 15px 20px;
+    height: 90px;
+}
+.card .motto{
+		font-family: 'Arima Madurai', cursive;
+    border-bottom: 1px solid #EEEEEE;
+    color: #999999;
+    font-size: 14px;
+    font-weight: 400;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.card .stats-container{
+	width: 100%;
+	margin-top: 50px;
+}
+.card .stats{
+	display: block;
+	float: left;
+	width: 33.333333%;
+	text-align: center;
+}
+
+.card .stats:first-child{
+	border-right: 1px solid #EEEEEE;
+}
+.card .stats:last-child{
+	border-left: 1px solid #EEEEEE;
+}
+.card .stats h4{
+		font-family: 'Arima Madurai', cursive;
+	font-weight: 300;
+	margin-bottom: 5px;
+}
+.card .stats p{
+	color: #777777;
+}
+/*      Just for presentation        */
+
+.title{
+    color: #506A85;
+    text-align: center;
+    font-weight: 300;
+    font-size: 44px;
+    margin-bottom: 90px;
+    line-height: 90%;
+}
+.title small{
+    font-size: 17px;
+    color: #999;
+    text-transform: uppercase;
+    margin: 0;
+}
+.space-30{
+	height: 30px;
+	display: block;
+}
+.space-50{
+    height: 50px;
+    display: block;
+}
+.space-200{
+    height: 200px;
+    display: block;
+}
+.white-board{
+    background-color: #FFFFFF;
+    min-height: 200px;
+    padding: 60px 60px 20px;
+}
+.ct-heart{
+    color: #F74933;
+}
+
+ pre.prettyprint{
+    background-color: #ffffff;
+    border: 1px solid #999;
+    margin-top: 20px;
+    padding: 20px;
+    text-align: left;
+}
+.atv, .str{
+    color: #05AE0E;
+}
+.tag, .pln, .kwd{
+     color: #3472F7;
+}
+.atn{
+  color: #2C93FF;
+}
+.pln{
+   color: #333;
+}
+.com{
+    color: #999;
+}
+
+.btn-simple{
+    opacity: .8;
+    color: #666666;
+    background-color: transparent;
+}
+
+.btn-simple:hover,
+.btn-simple:focus{
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 1;
+}
+.btn-simple i{
+    font-size: 16px;
+}
+
+.navbar-brand-logo{
+    padding: 0;
+}
+.navbar-brand-logo .logo{
+    border: 1px solid #333333;
+    border-radius: 50%;
+    float: left;
+    overflow: hidden;
+    width: 60px;
+}
+.navbar .navbar-brand-logo .brand{
+    color: #FFFFFF;
+    float: left;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 60px;
+}
+.navbar-default .navbar-brand-logo .brand{
+    color: #555;
+}
+
+
+/*       Fix bug for IE      */
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .front, .back{
+        -ms-backface-visibility: visible;
+        backface-visibility: visible;
+    }
+
+    .back {
+        visibility: hidden;
+        -ms-transition: all 0.2s cubic-bezier(.92,.01,.83,.67);
+    }
+    .front{
+        z-index: 4;
+    }
+    .card-container:not(.manual-flip):hover .back,
+    .card-container.manual-flip.hover .back{
+        z-index: 5;
+        visibility: visible;
+    }
+}
+  body {
+      font: 20px;
+      line-height: 1.8;
+      color: #f5f6f7;
+  }
+  p {font-size: 16px;}
+ 
+  .navbar {
+     
+     
+      margin-bottom: 0;
+      font-size: 16px;
+     
+  }
+  .navbar-default {
+    background-color:black;
+	border-color:black;
+   
+}
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  /*
+ 
+Fade content bs-carousel with hero headers
+Code snippet by maridlcrmn (Follow me on Twitter @maridlcrmn) for Bootsnipp.com
+Image credits: unsplash.com
 */
 
-.detailBox {
-width:320px;
-border:1px solid #bbb;
-margin:50px;
+/********************************/
+/*       Fade Bs-carousel       */
+/********************************/
+.fade-carousel {
+    position: relative;
+    height: 70vh;
 }
-.titleBox {
-background-color:#fdfdfd;
-padding:10px;
+.fade-carousel .carousel-inner .item {
+    height: 70vh;
 }
-.titleBox label{
-color:#444;
-margin:0;
-display:inline-block;
+.fade-carousel .carousel-indicators > li {
+    margin: 0 2px;
+    background-color: #f39c12;
+    border-color: #f39c12;
+    opacity: .7;
 }
-
-.commentBox {
-padding:10px;
-border-top:1px dotted #bbb;
-}
-.commentBox .form-group:first-child, .actionBox .form-group:first-child {
-width:80%;
-}
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-width:18%;
-}
-.actionBox .form-group * {
-width:100%;
-}
-.taskDescription {
-margin-top:10px 0;
-}
-.commentList {
-padding:0;
-list-style:none;
-max-height:200px;
-overflow:auto;
-}
-.commentList li {
-margin:0;
-margin-top:10px;
-}
-.commentList li > div {
-display:table-cell;
-}
-.commenterImage {
-width:30px;
-margin-right:5px;
-height:100%;
-float:left;
-}
-.commenterImage img {
-width:100%;
-border-radius:50%;
-}
-.commentText p {
-margin:0;
-}
-.sub-text {
-color:#aaa;
-font-family:verdana;
-font-size:11px;
-}
-.actionBox {
-border-top:1px dotted #bbb;
-padding:10px;
+.fade-carousel .carousel-indicators > li.active {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
 }
 
-</style>
-<style type="text/css">
-.user_name{
-font-size:14px;
-font-weight: bold;
-color:black;
+/********************************/
+/*          Hero Headers        */
+/********************************/
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+      -webkit-transform: translate3d(-50%,-50%,0);
+         -moz-transform: translate3d(-50%,-50%,0);
+          -ms-transform: translate3d(-50%,-50%,0);
+           -o-transform: translate3d(-50%,-50%,0);
+              transform: translate3d(-50%,-50%,0);
 }
-.comments-list .media{
-border-bottom: 1px dotted #ccc
-color:black;
+.hero h1 {
+    font-size: 6em;    
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
 }
-.media-body, .media-left, .media-right {
-color: grey;
-display: table-cell;
-vertical-align: top;
+
+.fade-carousel .carousel-inner .item .hero {
+    opacity: 0;
+    -webkit-transition: 2s all ease-in-out .1s;
+       -moz-transition: 2s all ease-in-out .1s; 
+        -ms-transition: 2s all ease-in-out .1s; 
+         -o-transition: 2s all ease-in-out .1s; 
+            transition: 2s all ease-in-out .1s; 
 }
-</style>
+.fade-carousel .carousel-inner .item.active .hero {
+    opacity: 1;
+    -webkit-transition: 2s all ease-in-out .1s;
+       -moz-transition: 2s all ease-in-out .1s; 
+        -ms-transition: 2s all ease-in-out .1s; 
+         -o-transition: 2s all ease-in-out .1s; 
+            transition: 2s all ease-in-out .1s;    
+}
 
-<script type="text/javascript">
-$(function() {
-var j = 3;
-// $('#ok').on('click', function(){
-// $.post("/create/login",{username : $('#username')[0].value, 
-// password : $('#password')[0].value, del_id : id}, function(data, status){
-// if(data.data === 'ok'){
-// alert('ok');
-// }else{
-// alert("Data: " + data + "\nStatus: " + status);
+/********************************/
+/*            Overlay           */
+/********************************/
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    
+    opacity: .7;
+}
 
-// }
-// });
-// })
-// $('.comments-list ul').on('dblclick','li', function(){
-// id = $(this)[0].id;
-// alert(id);
-// $('#login').show(100);
-// }) 
+/********************************/
+/*          Custom Buttons      */
+/********************************/
+.btn.btn-lg {padding: 10px 40px;}
+.btn.btn-hero,
+.btn.btn-hero:hover,
+.btn.btn-hero:focus {
+    color: #f5f5f5;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    outline: none;
+    margin: 20px auto;
+}
+.img {
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    margin-bottom:20px;
+}
 
-//send comment 
-$('#btn_add').on('click',function(){
-	alert($('#user_comment').val());
-	$.post('/setMessage',{message : $('#user_comment').val()}, function(data, status){
-		if(data === 'ok'){
-			$('#btn_add').hide();
-			$.post('/getMessage',{count : 0, limit : 1}, function(data, status){
-		if(data !== undefined && data && data.length <= 2){
-			for(var x in data){
-				$('.actionBox').after(`
-					<ul class="commentList">
-						<li>
-							<div class="commenterImage">
-								<img src="${data[x].image}" />
-							</div>
-							<div class="commentText">
-								<p class="" id = "realMessage">${data[x].comment}</p>
-								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
 
-							</div>
-						</li>
-					</ul>
-					`);
-			}
-		}
-})
-		}
-	})
-});
+/********************************/
+/*       Slides backgrounds     */
+/********************************/
+.fade-carousel .slides .slide-1, 
+.fade-carousel .slides .slide-2,
+.fade-carousel .slides .slide-3 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.fade-carousel .slides .slide-1 {
+ background-image:url(flickr-sstrieu-960x500.jpg);
+}
+.fade-carousel .slides .slide-2 {
+  background-image:url(Food-shot_Fotor-960x500.jpg);
 
-//show more comments
-var i = 2;
-$('#btn_show').on('click', function(){
-	$.post('getMessage',{count : i, limit : 2}, function(data, status){
-		alert(data.length)
-		if(data !== undefined && data && data.length <= 2){
-			for(var x in data){
-				$('.actionBox').after(`
-					<ul class="commentList">
-						<li>
-							<div class="commenterImage">
-								<img src="${data[x].image}" />
-							</div>
-							<div class="commentText">
-								<p class="" id = "realMessage">${data[x].comment}</p>
-								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+}
+.fade-carousel .slides .slide-3 {
+ background-image:url(Informalist-013-960x500.jpg)
+}
 
-							</div>
-						</li>
-					</ul>
-					`);
-			}
-		}
-	})
-		i += 2;
-})
-//get message
-$.post('/getMessage',{count : 0, limit : 2}, function(data, status){
-	if(data !== undefined && data && data.length <= 2){
-			for(var x in data){
-				$('.actionBox').after(`
-					<ul class="commentList">
-						<li>
-							<div class="commenterImage">
-								<img src="${data[x].image}" />
-							</div>
-							<div class="commentText">
-								<p class="" id = "realMessage">${data[x].comment}</p>
-								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+/********************************/
+/*          Media Queries       */
+/********************************/
+@media screen and (min-width: 980px){
+    .hero { width: 980px; }    
+}
+@media screen and (max-width: 640px){
+    .hero h1 { font-size: 3em; }    
+}
+img {
+   /* IE6-9 */
+  
+    -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    margin-bottom:20px;
+}
 
-							</div>
-						</li>
-					</ul>
-					`);
-			}
-		}
-})
+img:hover {
+  filter: none; /* IE6-9 */
+  -webkit-filter: grayscale(0); 
+ 
+}
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
+.nav.nav-justified > li > a { position: relative; }
+.nav.nav-justified > li > a:hover,
+.nav.nav-justified > li > a:focus { background-color: transparent; }
+.nav.nav-justified > li > a > .quote {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    opacity: 0;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background-color: #13c0ba;
+    border-radius: 15px;
+    color: #fff;  
+}
+.navbar {
+    border-radius: 0;
+}
+.nav.nav-justified > li.active > a > .quote { opacity: 1; }
+.nav.nav-justified > li > a > img { box-shadow: 0 0 0 5px #13c0ba; }
+.nav.nav-justified > li > a > img { 
+    max-width: 100%; 
+    opacity: .3; 
+    -webkit-transform: scale(.8,.8);
+            transform: scale(.8,.8);
+    -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.nav.nav-justified > li.active > a > img,
+.nav.nav-justified > li:hover > a > img,
+.nav.nav-justified > li:focus > a > img { 
+    opacity: 1; 
+    -webkit-transform: none;
+            transform: none;
+    -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tab-pane .tab-inner { padding: 30px 0 20px; }
 
-//show facebook login
-$('#user_comment').on('keyup', function(){
-	if($(this).val() !== ''){
-		$('#facebookLogin').show('slow');
-	}
-})
+@media (min-width: 768px) {
+    .nav.nav-justified > li > a > .quote {
+        left: auto;
+        top: auto;
+        right: 20px;
+        bottom: 0px;
+    }  
+}
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 
-//open new window
-$('#facebookLogin').on('click', function(){
-		$('#btn_add').show();
-	window.open('http://localhost:3000/auth/facebook','myWindow', "width=500, height=300");
-});
+.nav.nav-justified > li > a { position: relative; }
+.nav.nav-justified > li > a:hover,
+.nav.nav-justified > li > a:focus { background-color: transparent; }
+.nav.nav-justified > li > a > .quote {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    opacity: 0;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background-color: #13c0ba;
+    border-radius: 15px;
+    color: #fff;  
+}
+.nav.nav-justified > li.active > a > .quote { opacity: 1; }
+.nav.nav-justified > li > a > img { box-shadow: 0 0 0 5px #13c0ba; }
+.nav.nav-justified > li > a > img { 
+    max-width: 100%; 
+    opacity: .3; 
+    -webkit-transform: scale(.8,.8);
+            transform: scale(.8,.8);
+    -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.nav.nav-justified > li.active > a > img,
+.nav.nav-justified > li:hover > a > img,
+.nav.nav-justified > li:focus > a > img { 
+    opacity: 1; 
+    -webkit-transform: none;
+            transform: none;
+    -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tab-pane .tab-inner { padding: 30px 0 20px; }
 
-// $('#send').on('click', function(){
-// $.post("/create/data",{comment : $('#reply')[0].value}, function(data, status){
-// alert("Data: " + data + "\nStatus: " + status);
-// });
-// console.log($('#reply')[0].value);
-// alert(j);
-// $.post("/create/message", {limit : j}, function(data, status){
-// console.log("Data: " + data[0] + "\nStatus: " + status);
-// var i = 1;
-// var array = [];
-// var out = '';
-// for(var x in data){
-// console.log(data[x]);
-// array.push(data[x].id);
-// if(data[x].comment_type === 'user'){
-// $('.comments-list ul').html('');
-// out += `
-// <li class="repeatingComment" id = '${i}'>
-// <p class="pull-right"><small>5 days ago</small></p>
-// <a class="media-left" href="#">
-// <img src="http://lorempixel.com/40/40/people/4/">
-// </a>
-// <div class="media-body">  
-// <h4 class="media-heading user_name" id = 'ryply_sender'>${data[x].createdTime}</h4>
-// ${data[x].comment}
-// </div>
-// </li>
-// `;
-// }
-// i++;
-// j++;
-// }
-// $('.comments-list ul').html(out);
-// });
-// })
-})    
-</script>
+@media (min-width: 768px) {
+    .nav.nav-justified > li > a > .quote {
+        left: auto;
+        top: auto;
+        right: 20px;
+        bottom: 0px;
+    }  
+}
+.last{
+background-image:url(../catering/image/dark-light.jpg)
+}
+.man{
+background-image:url(../catering/image/dark-light.jpg)
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+margin-top:22px;
 
+}
+
+.footer-bottom {
+    background-color: #15224f;
+    min-height: 30px;
+    width: 100%;
+}
+.copyright {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+}
+.design {
+    color: #fff;
+    line-height: 30px;
+    min-height: 30px;
+    padding: 7px 0;
+    text-align: right;
+}
+.design a {
+    color: #fff;
+}
+
+#timeline {
+  list-style: none;
+  position: relative;
+}
+#timeline:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 2px;
+  background-color: #4997cd;
+  left: 50%;
+  margin-left: -1.5px;
+}
+#timeline .clearFix {
+  clear: both;
+  height: 0;
+}
+#timeline .timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2em;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -25px;
+  background-color: #4997cd;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+#timeline .timeline-badge span.timeline-balloon-date-day {
+  font-size: 1.4em;
+}
+#timeline .timeline-badge span.timeline-balloon-date-month {
+  font-size: .7em;
+  position: relative;
+  top: -10px;
+}
+#timeline .timeline-badge.timeline-filter-movement {
+  background-color: #ffffff;
+  font-size: 1.7em;
+  height: 35px;
+  margin-left: -18px;
+  width: 35px;
+  top: 40px;
+}
+#timeline .timeline-badge.timeline-filter-movement a span {
+  color: #4997cd;
+  font-size: 1.3em;
+  top: -1px;
+}
+#timeline .timeline-badge.timeline-future-movement {
+  background-color: #ffffff;
+  height: 35px;
+  width: 35px;
+  font-size: 1.7em;
+  top: -16px;
+  margin-left: -18px;
+}
+#timeline .timeline-badge.timeline-future-movement a span {
+  color: #4997cd;
+  font-size: .9em;
+  top: 2px;
+  left: 1px;
+}
+#timeline .timeline-movement {
+  border-bottom: dashed 1px #4997cd;
+  position: relative;
+}
+#timeline .timeline-movement.timeline-movement-top {
+  height: 60px;
+}
+#timeline .timeline-movement .timeline-item {
+  padding: 20px 0;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel {
+  border: 1px solid #d4d4d4;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+  color: #666;
+  padding: 10px;
+  position: relative;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+#timeline .timeline-movement .timeline-item .timeline-panel .timeline-panel-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel.credits .timeline-panel-ul {
+  text-align: right;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel.credits .timeline-panel-ul li {
+  color: #666;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel.credits .timeline-panel-ul li span.importo {
+  color: #468c1f;
+  font-size: 1.3em;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel.debits .timeline-panel-ul {
+  text-align: left;
+}
+#timeline .timeline-movement .timeline-item .timeline-panel.debits .timeline-panel-ul span.importo {
+  color: #e2001a;
+  font-size: 1.3em;
+}
+marquee>a, marquee>a:hover{color:#000; text-decoration:none;}
+.productbox {
+    width:250px;
+    height:auto;
+    background-color:#ffffff;
+    padding:10px;
+	margin-bottom:10px;
+	 padding: 10px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        background-color: #fff;
+        border: solid 1px #cbcbcb;
+        transition: all .20s ease-in-out;
+}
+.productbox img{
+    width:235px;
+    height:214px;
+    }
+.producttitle {
+   
+	padding:5px 0 5px 0; 
+   width: 235px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align:center;
+  color:grey;
+    
+}
+.producttitle a{
+   color:#000;
+   text-decoration:none;
+    }
+.producttitle .btn{
+    background-color:#EDEEF0;
+}
+
+#quote-carousel 
+{
+  padding: 0 10px 30px 10px;
+  margin-top: 20px;
+}
+
+/* Control buttons  */
+#quote-carousel .carousel-control
+{
+  background: none;
+  color: #222;
+  font-size: 2.3em;
+  text-shadow: none;
+  margin-top: 30px;
+}
+/* Previous button  */
+#quote-carousel .carousel-control.left 
+{
+  left: -12px;
+}
+/* Next button  */
+#quote-carousel .carousel-control.right 
+{
+  right: -12px !important;
+}
+/* Changes the position of the indicators */
+#quote-carousel .carousel-indicators 
+{
+  right: 50%;
+  top: auto;
+  bottom: 0px;
+  margin-right: -19px;
+}
+/* Changes the color of the indicators */
+#quote-carousel .carousel-indicators li 
+{
+  background: #c0c0c0;
+}
+#quote-carousel .carousel-indicators .active 
+{
+  background: #333333;
+}
+#quote-carousel img
+{
+  width: 250px;
+  height: 100px
+}
+/* End carousel */
+
+.item blockquote {
+    border-left: none; 
+    margin: 0;
+}
+
+.item blockquote img {
+    margin-bottom: 10px;
+}
+
+.item blockquote p:before {
+    content: "\f10d";
+    font-family: 'Fontawesome';
+    float: left;
+    margin-right: 10px;
+}
+
+
+
+/**
+  MEDIA QUERIES
+*/
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    #quote-carousel 
+    {
+      margin-bottom: 0;
+      padding: 0 40px 30px 40px;
+    }
+    
+}
+
+.te{
+background-image:url(dark-light.jpg)
+
+}
+
+  </style>
 </head>
 <body>
-<div class="detailBox">
-<div class="titleBox">
-<label>Comment Box</label>
-<button type="button" class="close" aria-hidden="true">&times;</button>
-</div>
-<div class="commentBox">
 
-<p class="taskDescription">We Are Waiting Your Thoughts And Notions About Our Service</p>
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+	
+      </button>
+      <a class="navbar-brand" href="/moreDetail">KAPOOR CATERERS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+	      <li><a href="#tes">TESTIMONIALS</a></li>
+        <li><a href="#gal">GALLERY</a></li>
+        <li><a href="#best">OUR BEST</a></li>
+		
+		
+     
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+  	</div><!--/col-->
 </div>
-<div class="actionBox">
-<!-- ===================================start=============================== -->
-<!-- ======================================================================= -->
-<form>
-<div class="form-group">
-<input class="form-control" type="text" placeholder="Your comments" name ='user_comment' id = 'user_comment' />
+<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+    <li data-target="#bs-carousel" data-slide-to="1"></li>
+    <li data-target="#bs-carousel" data-slide-to="2"></li>
+  </ol>
+  
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item slides active">
+      <div class="slide-1"></div>
+      <div class="hero">
+        <hgroup>
+            <h1>We are creative</h1>        
+            <h3>Big enough to compete, small enough to care</h3>
+        </hgroup>
+       
+      </div>
+    </div>
+    <div class="item slides">
+      <div class="slide-2"></div>
+      <div class="hero">        
+        <hgroup>
+            <h1>We are amazing</h1>        
+            <h3>Food is our forte. People are our passion</h3>
+        </hgroup>       
+       
+      </div>
+    </div>
+    <div class="item slides">
+      <div class="slide-3"></div>
+      <div class="hero">        
+        <hgroup>
+            <h1>We are smart</h1>        
+            <h3>Prepared with passion. Delivered with pride</h3>
+        </hgroup>
+        
+      </div>
+    </div>
+  </div> 
 </div>
-<div class="form-group">
-<button type="button"  class="btn btn-default" style='display: none;' name = 'btn_add' id ='btn_add'>Add</button>
+<div class="divider" id="section1"></div>
+													<div class="container">
+														<div class="col-sm-10 col-sm-offset-1">
+															<div class="page-header text-center">
+																<h1 style="color:black">About us</h1>
+															</div>
+															<p class="lead text-center" style="color:black">
+     Providing high-quality catering services 
+    </p>
+															<p class="text-center"style="color:grey">We are now the third generation into non veg cooking, that is, since 1962
+We started from a small shop which was situated in Adarsh cinema and by 2000 we started catering services too!
+We are specialists in Tawa dishes.
+We cook all our dishes in pure desi ghee.The Catering Services provides full-service custom catering for a wide variety of corporate, individual and university-related events within the area and across the state.
+Dedicated to excellence in food quality, preparation and presentation, and renowned for imaginative décor, we cater functions both small and large. Whether you are planning a buffet, seated dinner, cocktail party, fundraiser or other special event, our team of international chefs and event planners can offer you innovative cuisine that’s tailored to your palate, ideal for the season and perfect for the chosen theme of your event</p>
+														</div>
+													</div>
+
 </div>
-<!-- ============================================================================ -->
-<div id = 'facebookLogin' style="display: none;">
-<!-- 	<h6 style="font-size:40px;">Welcome! Please log in.</h6>
- -->	<!-- href="/auth/facebook" -->
-	<a><img src="/public/facebook login.png" width="151" height="50"></a>
+
+    <div class="container">
+    <div class="row">
+     <div class="col-sm-10 col-sm-offset-1">
+         <div class="col-md-4 col-sm-6">
+             <div class="card-container">
+                <div class="card">
+                    <div class="front">
+                        <div class="cover">
+                            <img src="/views/golden2.jpg">
+                        </div>
+                       
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="name">Amritsar da jawab nhi</h3>
+                                <p class="profession">Monojit Majumdar</p>
+                                <p>Once upon a time goldsmith Surinder Singh Speciality is tawa cooking.All his master creations - a delightfully crisp , golden-brown mutton champ(coated with mince & spices.</p>
+                            </div>
+                          
+                        </div>
+                    </div> <!-- end front panel -->
+                    <div class="back">
+                        <div class="header">
+                            <p>Tawa Meat(soft & dark chunks of goat).Magaz Masala(lamb brains in onions and tomatoes are cooked on the tawa.Back in his native Amritsar,Surinder Singh is supposed to be some part of a culinary icon and if i am talking about Chana Kulcha which is served with a wicked onion garlic chilly chutni is outsstanding & i am seriously thinking of shifting to Amritsar city of food,taste and happiness</p>
+                        </div>
+                      
+                        
+                    </div> <!-- end back panel -->
+                </div> <!-- end card -->
+            </div> <!-- end card-container -->
+        </div> <!-- end col sm 3 -->
+<!--         <div class="col-sm-1"></div> -->
+        <div class="col-md-4 col-sm-6">
+             <div class="card-container manual-flip">
+                <div class="card">
+                    <div class="front">
+                        <div class="cover">
+                            <img src="/views/food-05.jpg">
+                        </div>
+
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="name">Taste Never Ends</h3>
+                                <p class="profession">Monojit Majumdar</p>
+                                <p>I have never liked dhaba food.I know some people sing romantic paeans to these shacks  among highways but I've always found the food too spicy but when it comes to Surinder Singh the food is awesome!</p>
+                            </div>
+                           
+                        </div>
+                    </div> <!-- end front panel -->
+                    <div class="back">
+                        <div class="header">
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
+                        </div>
+                        <div class="content">
+                            <div class="main">
+                                <h4 class="text-center">Job Description</h4>
+                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+
+                                <div class="stats-container">
+                                    <div class="stats">
+                                        <h4>235</h4>
+                                        <p>
+                                            Followers
+                                        </p>
+                                    </div>
+                                    <div class="stats">
+                                        <h4>114</h4>
+                                        <p>
+                                            Following
+                                        </p>
+                                    </div>
+                                    <div class="stats">
+                                        <h4>35</h4>
+                                        <p>
+                                            Projects
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                       
+                    </div> <!-- end back panel -->
+                </div> <!-- end card -->
+            </div> <!-- end card-container -->
+        </div> <!-- end col sm 3 -->
+<!--         <div class="col-sm-1"></div> -->
+        <div class="col-md-4 col-sm-6">
+            <div class="card-container">
+                <div class="card">
+                    <div class="front">
+                        <div class="cover">
+                            <img src="/views/flavour.jpg">
+                        </div>
+                        
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="name">Flavours</h3>
+                                <p class="profession">Saumit Singh</p>
+
+                                <p> Yes ji, it is ekdum world famous in punjab ! if you have been to Amritsar , you will know what saffron is to Ahuja ki Lassi , what Magaz Masala and champ is to Surinder Singh Kapoor</p>
+                            </div>
+                            
+                        </div>
+                    </div> <!-- end front panel -->
+                    <div class="back">
+                        <div class="header">
+                            <p>'Adarsh Talkie Wala'.Amritsari food is cusine in its own right and spawned a string of Amritsar-inspired dhabas in Delhi.Lekin ji ,authentic is authentic and so Jaypee Vasant Continental's. To retain the real flavour ; they are using vlay sigris , kujas and tawas to prepare the food and its not just the food,even the feel is of Amritsar- yo get the idea.</p>
+                        </div>
+                       
+                    
+                    </div><!-- end back panel -->
+                </div> <!-- end card -->
+            </div> <!-- end card-container -->
+        </div> <!-- end col-sm-3 -->
+        </div> <!-- end col-sm-10 -->
+    </div> <!-- end row -->
+    <div class="space"></div>
 </div>
-<div>
-<button type="button" style = 'width : 100%; position: relative;' class="btn btn-default" name = 'btn_show' id ='btn_show'>Show More Comments</button>
+
+<script>
+   $().ready(function(){
+        $('[rel="tooltip"]').tooltip();
+
+    });
+
+    function rotateCard(btn){
+        var $card = $(btn).closest('.card-container');
+        console.log($card);
+        if($card.hasClass('hover')){
+            $card.removeClass('hover');
+        } else {
+            $card.addClass('hover');
+        }
+    }
+	</script>
+													<div id="best">
+<center><h1 style="color:black">Our Best</h1></center>
+ <marquee style="  scrollamount="5" scrolldelay="2" direction="left">
+<ul class="list-inline list-unstyled r">
+
+<li class="productbox">
+    <img src="/views/muttonchamp2.jpg" class="img-responsive">
+    <div class="producttitle"> MUTTON CHAMP</div> 
+</li> 
+<li class="productbox">
+    <img src="/views/bt.jpg" class="img-responsive">
+    <div class="producttitle"> BRAIN MASALA</div> 
+</li>
+<li class="productbox">
+    <img src="/views/tawameatmarquee.jpg" class="img-responsive">
+    <div class="producttitle"> TAWA MEAT</div> 
+</li>
+<li class="productbox">
+    <img src="/views/ctm.jpg"  class="img-responsive">
+    <div class="producttitle"> CHICKEN TIKKA MASALA</div> 
+</li>
+<li class="productbox">
+    <img src="/views/k.jpg"  class="img-responsive">
+    <div class="producttitle"> TAWA CHICKEN</div> 
+</li>
+<li class=" productbox">
+    <img src="/views/cr.jpg"  class="img-responsive">
+    <div class="producttitle"> CHICKEN RESHAM</div> 
+</li>
+<li class="productbox">
+    <img src="/views/m.jpg"  class="img-responsive">
+    <div class="producttitle">KEEMA KALEJI</div> 
+</li>
+<li class="productbox">
+    <img src="/views/gk.jpg"  class="img-responsive">
+    <div class="producttitle"> GURDE KAPURE</div> 
+</li>
+<li class=" productbox">
+    <img src="/views/mk.jpeg" class="img-responsive">
+    <div class="producttitle">MUTTON KORMA</div> 
+</li>
+<li class=" productbox">
+    <img src="/views/sc.jpg" class="img-responsive">
+    <div class="producttitle"> SAHAI CHAMP</div> 
+</li>
+<li class=" productbox">
+    <img src="/views/shamikebab.jpg"  class="img-responsive">
+    <div class="producttitle"> SHAMI KEBAB </div> 
+</li>
+<li class=" productbox">
+    <img src="/views/muttontikka.jpg"  class="img-responsive">
+    <div class="producttitle"> MUTTON TIKKA </div> 
+</li>
+
+</ul><br>
+</marquee>
 </div>
-<!-- ============================================================================ -->
-</form>
+
+  <div id="tes">
+  <div class="te">
+    <div class="container">
+    <div class="page-header">
+	<center>	<h1 style="">Testimonials</h1></center>
+	</div>
+	<div id="timeline"><div class="row timeline-movement timeline-movement-top">
+    
+       
+    <div class="timeline-badge timeline-filter-movement">
+        <a href="#">
+            <span class="glyphicon glyphicon-time"></span>
+        </a>
+    </div>
+
+</div>
+
+<div class="row timeline-movement">
+
+   
+
+
+    <div class="col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="timeline-panel credits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo">Amritsar da jawab nahi</span></li>
+                        <li><span class="causale">I've never liked dhaba food.i know some people sing romantic peans to these shacks along highway,but when it comes to Kapoor Adarsh  it <br> just  mind blowing.! </span> </li>
+                        <li><p><small class="text-muted"></i> Monojit Majumdar</small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-11">
+                <div class="timeline-panel debits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo">Kulcha Ne Din Banaata</span></li>
+                        <li><span class="causale">The best morning food you have during occasion.! </span> </li>
+                        <li><p><small class="text-muted"> Rahul Sukhla</small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--due -->
+
+<div class="row timeline-movement">
+
+
+ 
+
+    <div class="col-sm-offset-6 col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-11">
+                <div class="timeline-panel debits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo">Chicken Da Jawab Nhi</span></li>
+                        <li><span class="causale">Roasted by adding Masalas,the unique and perfect taste.!  </span> </li>
+                        <li><p><small class="text-muted">Rohit Trivedi</small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="timeline-panel credits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo">Perfect Management</span></li>
+                        <li><span class="causale">If you have good services and proper space , your event will be successful.! </span> </li>
+                        <li><p><small class="text-muted"></i>Geeta Mishra</small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="row timeline-movement">
+
+
+
+    <div class="col-sm-offset-6 col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-11">
+                <div class="timeline-panel debits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo"> Good Combination</span></li>
+                        <li><span class="causale">You need to try combinations , untill you dont find anything delicious.! </span> </li>
+                        <li><p><small class="text-muted">Ravi Kant</small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6  timeline-item">
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="timeline-panel credits">
+                    <ul class="timeline-panel-ul">
+                        <li><span class="importo">Pure Desi Ghee</span></li>
+                        <li><span class="causale"> Proper use of desi ghee and delicious food.!</span> </li>
+                        <li><p><small class="text-muted"> Satinder </small></p> </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 </div>
+</div>
+</div>
+</div>
+
+<div id="gal">
+
+<div class="container">
+<div class="divider"></div>
+  	<div class="col-sm-8 col-sm-offset-2 text-center">
+      <h1 style="color:black">Gallery </h1>
+      
+      <p style="color:grey;font-size:18px">Your diet is a bank account. Good food choices are good investments
+
+      </p>
+      
+      <hr>
+      
+      
+  	</div><!--/col-->
+	<div class="row">
+		<div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="/views/cng_bheja_fry.jpg"/></div>
+        <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="
+        /views/2dcf3e91ae0cac8116557c38869d5a5.jpg"/></div>
+        <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="                                 /views/kadhai-chicken-300x300.jpg"/></div>
+        <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="
+        /views/indian-chicken-korma-recipe-600-300x300.jpg"/></div>
+    	<div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="/views/SHAHI-PANEER-300x300.jpg" /></div>
+        <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="/views/dal-makhni-300x300.jpg"/></div>
+	    <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="/views/onionmasaladosa-300x300.jpg" /></div>
+        <div class="col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="                                 /views/pav-bhaji-a-tasty-recipe.300x300.jpg"/></div>
+    </div>
+</div>
+</div>
+
+
+<div id="partner">
+ <!-- Head tags to include FontAwesome -->
+<div class="last">
+
+<div class="container">
+  <div class="row">
+    <div class='col-md-offset-2 col-md-8 text-center'>
+    <h2 style="color:black">Partners</h2>
+	<hr>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-offset-2 col-md-8'>
+      <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+        <!-- Bottom Carousel Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#quote-carousel" data-slide-to="1"></li>
+          <li data-target="#quote-carousel" data-slide-to="2"></li>
+        </ol>
+        
+        <!-- Carousel Slides / Quotes -->
+        <div class="carousel-inner">
+        
+          <!-- Quote 1 -->
+          <div class="item active">
+           
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="/views/step0001.jpg" style="width:100px;height:100px;">
+                  
+                </div>
+                <div class="col-sm-9">
+                  <p style="color:black">A goldsmith by profession , kapoor's father had a passion for cooking.But it was only when the Gold Regulation Act brought losses upon his business , that he turned this passion into a lucrative business.Surinder joined the business at the age of 10.</p>
+                  <small style="color:grey">Lt . Surinder Singh Kapoor </small>
+                </div>
+              </div>
+            
+          </div>
+          <!-- Quote 2 -->
+          <div class="item">
+           
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="/views/7dba530f-adce-409f-a735-78819dfaa122.jpg" style="width: 100px;height:100px;">
+                </div>
+                <div class="col-sm-9">
+                  <p style="color:black">It sounds really cheesy, but I've just really been so focused on making sure that I am nice to everyone that I work with and making the effort to get to know the people on set, whether it's the catering crew or the famous photographer.
+</p>
+                  <small style="color:grey">Raj Kapoor </small>
+                </div>
+              </div>
+            
+          </div>
+          <!-- Quote 3 -->
+          <div class="item">
+           
+              <div class="row">
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="/views/sherry.jpg"style="width: 100px;height:100px;">
+                </div>
+                <div class="col-sm-9">
+                  <p style="color:black">I think about the audience in the sense that I serve as my own audience. I have to please myself the way, if I saw the movie in a theater, I would be pleased. Do I think about catering to an audience? No. </p>
+                  <small style="color:grey">Sherry Kapoor</small>
+                </div>
+              </div>
+           
+          </div>
+        </div>
+		</div>
+        
+ 
+      </div>                          
+    </div>
+  </div>
+</div>
+</div>
+
+					  
+
+					
+<div class="footer-bottom">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+				<div class="copyright">
+
+					© 2017 All rights reserved
+
+				</div>
+
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+				<div class="design">
+
+					 <a href="#">Franchisee </a> |  <a target="_blank" href="https://www.facebook.com/love.mahajan.9">Web Design & Development by Luv Sehgal</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+                 
 </body>
 </html>
