@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+/*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+*/
+
+.detailBox {
+width:320px;
+border:1px solid #bbb;
+margin:50px;
+}
+.titleBox {
+background-color:#fdfdfd;
+padding:10px;
+}
+.titleBox label{
+color:#444;
+margin:0;
+display:inline-block;
+}
+
+.commentBox {
+padding:10px;
+border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+width:18%;
+}
+.actionBox .form-group * {
+width:100%;
+}
+.taskDescription {
+margin-top:10px 0;
+}
+.commentList {
+padding:0;
+list-style:none;
+max-height:200px;
+overflow:auto;
+}
+.commentList li {
+margin:0;
+margin-top:10px;
+}
+.commentList li > div {
+display:table-cell;
+}
+.commenterImage {
+width:30px;
+margin-right:5px;
+height:100%;
+float:left;
+}
+.commenterImage img {
+width:100%;
+border-radius:50%;
+}
+.commentText p {
+margin:0;
+}
+.sub-text {
+color:#aaa;
+font-family:verdana;
+font-size:11px;
+}
+.actionBox {
+border-top:1px dotted #bbb;
+padding:10px;
+}
+
+</style>
+<style type="text/css">
+.user_name{
+font-size:14px;
+font-weight: bold;
+color:black;
+}
+.comments-list .media{
+border-bottom: 1px dotted #ccc
+color:black;
+}
+.media-body, .media-left, .media-right {
+color: grey;
+display: table-cell;
+vertical-align: top;
+}
+</style>
+
+<script type="text/javascript">
+$(function() {
+var j = 3;
+// $('#ok').on('click', function(){
+// $.post("/create/login",{username : $('#username')[0].value, 
+// password : $('#password')[0].value, del_id : id}, function(data, status){
+// if(data.data === 'ok'){
+// alert('ok');
+// }else{
+// alert("Data: " + data + "\nStatus: " + status);
+
+// }
+// });
+// })
+// $('.comments-list ul').on('dblclick','li', function(){
+// id = $(this)[0].id;
+// alert(id);
+// $('#login').show(100);
+// })
+
+//send comment 
+$('#btn_add').on('click',function(){
+	alert($('#user_comment').val());
+	$.post('/setMessage',{message : $('#user_comment').val()}, function(data, status){
+		if(data === 'ok'){
+			$('#btn_add').hide();
+			$.post('/getMessage',{count : 0, limit : 1}, function(data, status){
+		if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+})
+		}
+	})
+});
+
+//show more comments
+var i = 2;
+$('#btn_show').on('click', function(){
+	$.post('getMessage',{count : i, limit : 2}, function(data, status){
+		alert(data.length)
+		if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+	})
+		i += 2;
+})
+//get message
+$.post('/getMessage',{count : 0, limit : 2}, function(data, status){
+	if(data !== undefined && data && data.length <= 2){
+			for(var x in data){
+				$('.actionBox').after(`
+					<ul class="commentList">
+						<li>
+							<div class="commenterImage">
+								<img src="${data[x].image}" />
+							</div>
+							<div class="commentText">
+								<p class="" id = "realMessage">${data[x].comment}</p>
+								<span class="date sub-text" id='Time'>${data[x].createdTime}</span>
+
+							</div>
+						</li>
+					</ul>
+					`);
+			}
+		}
+})
+
+//show facebook login
+$('#user_comment').on('keyup', function(){
+	if($(this).val() !== ''){
+		$('#facebookLogin').show('slow');
+	}
+})
+
+//open new window
+$('#facebookLogin').on('click', function(){
+		$('#btn_add').show();
+	window.open('http://localhost:3000/auth/facebook','myWindow', "width=500, height=300");
+});
+
+// $('#send').on('click', function(){
+// $.post("/create/data",{comment : $('#reply')[0].value}, function(data, status){
+// alert("Data: " + data + "\nStatus: " + status);
+// });
+// console.log($('#reply')[0].value);
+// alert(j);
+// $.post("/create/message", {limit : j}, function(data, status){
+// console.log("Data: " + data[0] + "\nStatus: " + status);
+// var i = 1;
+// var array = [];
+// var out = '';
+// for(var x in data){
+// console.log(data[x]);
+// array.push(data[x].id);
+// if(data[x].comment_type === 'user'){
+// $('.comments-list ul').html('');
+// out += `
+// <li class="repeatingComment" id = '${i}'>
+// <p class="pull-right"><small>5 days ago</small></p>
+// <a class="media-left" href="#">
+// <img src="http://lorempixel.com/40/40/people/4/">
+// </a>
+// <div class="media-body">  
+// <h4 class="media-heading user_name" id = 'ryply_sender'>${data[x].createdTime}</h4>
+// ${data[x].comment}
+// </div>
+// </li>
+// `;
+// }
+// i++;
+// j++;
+// }
+// $('.comments-list ul').html(out);
+// });
+// })
+})    
+</script>
+
+</head>
+<body>
+<div class="detailBox">
+<div class="titleBox">
+<label>Comment Box</label>
+<button type="button" class="close" aria-hidden="true">&times;</button>
+</div>
+<div class="commentBox">
+
+<p class="taskDescription">We Are Waiting Your Thoughts And Notions About Our Service</p>
+</div>
+<div class="actionBox">
+<!-- ===================================start=============================== -->
+<!-- ======================================================================= -->
+<form>
+<div class="form-group">
+<input class="form-control" type="text" placeholder="Your comments" name ='user_comment' id = 'user_comment' />
+</div>
+<div class="form-group">
+<button type="button"  class="btn btn-default" style='display: none;' name = 'btn_add' id ='btn_add'>Add</button>
+</div>
+<!-- ============================================================================ -->
+<div id = 'facebookLogin' style="display: none;">
+<!-- 	<h6 style="font-size:40px;">Welcome! Please log in.</h6>
+ -->	<!-- href="/auth/facebook" -->
+	<a><img src="/public/facebook login.png" width="151" height="50"></a>
+</div>
+<div>
+<button type="button" style = 'width : 100%; position: relative;' class="btn btn-default" name = 'btn_show' id ='btn_show'>Show More Comments</button>
+</div>
+<!-- ============================================================================ -->
+</form>
+</div>
+</div>
+</body>
+</html>
